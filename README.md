@@ -110,15 +110,15 @@ The dashboard was designed with the Netflix Dark Mode + Red Accent corporate ide
 
 ## 📂 Repository Structure
 ```text
-├── data/
+├── Data/
 │   ├── netflix_new.csv        # Raw Netflix catalog data
-├── sql/
-│   ├── explore.sql            # PostgreSQL EDA queries
-│   └── results/               # Aggregated query result tables (.csv)
+├── Sql/
+│   ├── Explore.sql            # PostgreSQL EDA queries
+│   └── Results/               # Aggregated query result tables (.csv)
 │       ├── nichie_new.csv     # Genre market gap analysis results
 │       ├── duration_analyst.csv  # Duration vs performance results
 │       └── country_roi.csv    # Country efficiency ranking results
-├── images/
+├── Images/
 │   └── dashboard.png          # Power BI dashboard screenshot
 ├── Porto1.pbix                # Power BI Desktop source file
 └── README.md
