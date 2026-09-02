@@ -32,6 +32,61 @@ Raw Data (.csv/.xlsx)
 
 3. Multi-Valued Columns in SQL: A film with 3 genres (e.g., "Drama, Comedy, Thriller") must be counted fairly in all three genre categories. Used STRING_TO_ARRAY + UNNEST in PostgreSQL to explode these into separate rows before aggregation.
 
+## 🛠️ Data Architecture & SQL Implementation
+After initial data cleaning (handling delimiter errors and text inconsistencies), I built three separate aggregation queries in **PostgreSQL** to efficiently answer each business experiment.
+
+### Experiment 1: Genre Market Gap Analysis
+This query aggregates average ratings and total viewer engagement per individual genre to spot market gaps.
+```sql
+SELECT
+    genre_tunggal,
+    COUNT(*) AS total_produksi,
+    ROUND(AVG(rating::numeric), 2) AS rata_rating,
+    SUM(vote::int) AS total_engagement
+FROM netflix_shows
+GROUP BY genre_tunggal
+ORDER BY rata_rating DESC;
+```
+*Logic Breakdown: Sorting by rata_rating DESC immediately pushes niche genres like Film-Noir and News to the top, proving the existence of potential market gaps.*
+
+### Experiment 2: Duration Categories & Attention Span Test
+This query utilizes a CASE WHEN statement as an early gatekeeper to group content into specific duration "buckets" before calculating performance metrics.
+```sql
+SELECT
+    CASE
+        WHEN duration < 60 THEN 'Sangat Pendek (<1 Jam)'
+        WHEN duration BETWEEN 60 AND 120 THEN 'Standar (1-2 Jam)'
+        ELSE 'Panjang (>2 Jam)'
+    END AS kategori_durasi,
+    COUNT(*) AS jumlah_konten,
+    ROUND(AVG(rating::numeric), 2) AS rata_rata_rating,
+    ROUND(AVG(vote::int), 0) AS rata_rata_vote
+FROM netflix_shows
+WHERE duration IS NOT NULL
+GROUP BY 1
+ORDER BY rata_rata_rating DESC;
+```
+
+### Experiment 3: Localization Efficiency (Non-US Markets)
+*This query filters the performance of international producers since 2010, applying a minimum sample threshold to maintain statistical validity.*
+```sql
+SELECT
+    country,
+    COUNT(*) AS jumlah_konten,
+    ROUND(AVG(rating::numeric), 2) AS rata_rata_rating,
+    SUM(vote::int) AS total_daya_tarik
+FROM netflix_shows
+WHERE country <> 'Unknown'
+    AND country <> 'United States'
+    AND year >= 2010 -- Filtering for modern trends
+    AND rating IS NOT NULL
+GROUP BY country
+HAVING COUNT(*) >= 10 -- Removing bias from countries with too few samples
+ORDER BY rata_rata_rating DESC, total_daya_tarik DESC
+LIMIT 5;
+```
+*Logic Breakdown: The WHERE clause executes early filtering to save memory computation, while the HAVING clause is used after grouping to eliminate countries with less than 10 total productions.*
+
 ## 📊 Key Insights & Dashboard
 Full Power BI Dashboard
 The dashboard was designed with the Netflix Dark Mode + Red Accent corporate identity, using an F-Pattern layout for intuitive executive scanning.
@@ -57,7 +112,6 @@ The dashboard was designed with the Netflix Dark Mode + Red Accent corporate ide
 ```text
 ├── data/
 │   ├── netflix_new.csv        # Raw Netflix catalog data
-│   └── imdb.xlsx              # IMDB ratings & engagement data (cleaned in Excel)
 ├── sql/
 │   ├── explore.sql            # PostgreSQL EDA queries
 │   └── results/               # Aggregated query result tables (.csv)
