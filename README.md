@@ -36,13 +36,13 @@ Raw Data (.csv/.xlsx)
 Full Power BI Dashboard
 The dashboard was designed with the Netflix Dark Mode + Red Accent corporate identity, using an F-Pattern layout for intuitive executive scanning.
 
-### Netflix Content Strategy Dashboard
+![Netflix Content Strategy Dashboard](Images/dashboard.png)
 
 ### Dashboard Features:
 
-Market Gap Scatter Plot: Plots genres by Rating vs. Volume, instantly revealing underserved high-quality niches vs. crowded low-quality genres.
-Duration Distribution (Dual-Axis): Compares rating and vote volume across content length categories on a single chart.
-Country ROI Table: Ranks non-US countries by quality-to-quantity efficiency.
+* Market Gap Scatter Plot: Plots genres by Rating vs. Volume, instantly revealing underserved high-quality niches vs. crowded low-quality genres.
+* Duration Distribution (Dual-Axis): Compares rating and vote volume across content length categories on a single chart.
+* Country ROI Table: Ranks non-US countries by quality-to-quantity efficiency.
 
 ### Key Findings
 1. Film-Noir is a Hidden Gem, "News" is Statistical Noise Market gap analysis revealed Film-Noir as the most underserved genre: only 5 titles, yet averaging 7.26 rating and ~37,500 votes/title. This is real demand. "News" appearing with 8.40 rating is misleading: only 2 titles with 482 total votes. The scatter quadrant separates true market gaps from data anomalies.
@@ -50,8 +50,8 @@ Country ROI Table: Ranks non-US countries by quality-to-quantity efficiency.
 3. United Kingdom: Maximum Quality, Minimum Volume UK produces only 30 titles but achieves the highest average global rating (7.10) among all non-US producers. Quality over quantity, proven by data.
 
 ## 💡 Strategic Recommendations
-Fund long-form original productions and license Film-Noir independent titles to capture an underserved audience with low competition.
-Prioritize UK-based studios as the primary target for international content funding based on proven quality-to-volume efficiency.
+1. Fund long-form original productions and license Film-Noir independent titles to capture an underserved audience with low competition.
+2. Prioritize UK-based studios as the primary target for international content funding based on proven quality-to-volume efficiency.
 
 ## 📂 Repository Structure
 ```text
